@@ -1,7 +1,6 @@
 package org.hamcrest.text;
 
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
@@ -42,30 +41,28 @@ public class StringContainsInOrder extends TypeSafeMatcher<String> {
     
     /**
      * Creates a matcher of {@link String} that matches when the examined string contains all of
-     * the specified substrings, regardless of the order of their appearance.
-     * <p/>
+     * the specified substrings, considering the order of their appearance.
      * For example:
      * <pre>assertThat("myfoobarbaz", stringContainsInOrder(Arrays.asList("bar", "foo")))</pre>
+     * fails as "foo" occurs before "bar" in the string "myfoobarbaz"
      * 
      * @param substrings
      *     the substrings that must be contained within matching strings
      */
-    @Factory
     public static Matcher<String> stringContainsInOrder(Iterable<String> substrings) {
         return new StringContainsInOrder(substrings);
     }
 
     /**
      * Creates a matcher of {@link String} that matches when the examined string contains all of
-     * the specified substrings, regardless of the order of their appearance.
-     * <p/>
+     * the specified substrings, considering the order of their appearance.
      * For example:
      * <pre>assertThat("myfoobarbaz", stringContainsInOrder("bar", "foo"))</pre>
+     * fails as "foo" occurs before "bar" in the string "myfoobarbaz"
      *
      * @param substrings
      *     the substrings that must be contained within matching strings
      */
-    @Factory
     public static Matcher<String> stringContainsInOrder(String... substrings) {
         return new StringContainsInOrder(Arrays.asList(substrings));
     }

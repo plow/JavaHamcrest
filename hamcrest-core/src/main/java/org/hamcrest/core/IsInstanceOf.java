@@ -1,10 +1,7 @@
-/*  Copyright (c) 2000-2006 hamcrest.org
- */
 package org.hamcrest.core;
 
 import org.hamcrest.Description;
 import org.hamcrest.DiagnosingMatcher;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 
@@ -65,13 +62,11 @@ public class IsInstanceOf extends DiagnosingMatcher<Object> {
      * the examined object.
      * 
      * <p>The created matcher assumes no relationship between specified type and the examined object.</p>
-     * <p/>
-     * For example: 
+     * For example:
      * <pre>assertThat(new Canoe(), instanceOf(Paddlable.class));</pre>
      * 
      */
     @SuppressWarnings("unchecked")
-    @Factory
     public static <T> Matcher<T> instanceOf(Class<?> type) {
         return (Matcher<T>) new IsInstanceOf(type);
     }
@@ -84,13 +79,11 @@ public class IsInstanceOf extends DiagnosingMatcher<Object> {
      * <p>The created matcher forces a relationship between specified type and the examined object, and should be
      * used when it is necessary to make generics conform, for example in the JMock clause
      * <code>with(any(Thing.class))</code></p>
-     * <p/>
-     * For example: 
+     * For example:
      * <pre>assertThat(new Canoe(), instanceOf(Canoe.class));</pre>
      *
      */
     @SuppressWarnings("unchecked")
-    @Factory
     public static <T> Matcher<T> any(Class<T> type) {
         return (Matcher<T>) new IsInstanceOf(type);
     }

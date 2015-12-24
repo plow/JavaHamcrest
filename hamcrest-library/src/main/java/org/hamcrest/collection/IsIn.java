@@ -2,7 +2,6 @@ package org.hamcrest.collection;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 import java.util.Arrays;
@@ -34,7 +33,6 @@ public class IsIn<T> extends BaseMatcher<T> {
     /**
      * Creates a matcher that matches when the examined object is found within the
      * specified collection.
-     * <p/>
      * For example:
      * <pre>assertThat("foo", isIn(Arrays.asList("bar", "foo")))</pre>
      * 
@@ -45,7 +43,6 @@ public class IsIn<T> extends BaseMatcher<T> {
      * 
      */
     @Deprecated
-    @Factory
     public static <T> Matcher<T> isIn(Collection<T> collection) {
         return in(collection);
     }
@@ -53,7 +50,6 @@ public class IsIn<T> extends BaseMatcher<T> {
     /**
      * Creates a matcher that matches when the examined object is found within the
      * specified collection.
-     * <p/>
      * For example:
      * <pre>assertThat("foo", is(in(Arrays.asList("bar", "foo"))))</pre>
      * 
@@ -61,7 +57,6 @@ public class IsIn<T> extends BaseMatcher<T> {
      *     the collection in which matching items must be found
      * 
      */
-    @Factory
     public static <T> Matcher<T> in(Collection<T> collection) {
         return new IsIn<T>(collection);
     }
@@ -69,7 +64,6 @@ public class IsIn<T> extends BaseMatcher<T> {
     /**
      * Creates a matcher that matches when the examined object is found within the
      * specified array.
-     * <p/>
      * For example:
      * <pre>assertThat("foo", isIn(new String[]{"bar", "foo"}))</pre>
      * 
@@ -80,7 +74,6 @@ public class IsIn<T> extends BaseMatcher<T> {
      * 
      */
     @Deprecated
-    @Factory
     public static <T> Matcher<T> isIn(T[] elements) {
         return in(elements);
     }
@@ -88,7 +81,6 @@ public class IsIn<T> extends BaseMatcher<T> {
     /**
      * Creates a matcher that matches when the examined object is found within the
      * specified array.
-     * <p/>
      * For example:
      * <pre>assertThat("foo", is(in(new String[]{"bar", "foo"})))</pre>
      * 
@@ -96,7 +88,6 @@ public class IsIn<T> extends BaseMatcher<T> {
      *     the array in which matching items must be found
      * 
      */
-    @Factory
     public static <T> Matcher<T> in(T[] elements) {
         return new IsIn<T>(elements);
     }
@@ -104,7 +95,6 @@ public class IsIn<T> extends BaseMatcher<T> {
     /**
      * Creates a matcher that matches when the examined object is equal to one of the
      * specified elements.
-     * <p/>
      * For example:
      * <pre>assertThat("foo", isOneOf("bar", "foo"))</pre>
      * 
@@ -115,7 +105,6 @@ public class IsIn<T> extends BaseMatcher<T> {
      * 
      */
     @Deprecated
-    @Factory
     public static <T> Matcher<T> isOneOf(T... elements) {
         return oneOf(elements);
     }
@@ -123,7 +112,6 @@ public class IsIn<T> extends BaseMatcher<T> {
     /**
      * Creates a matcher that matches when the examined object is equal to one of the
      * specified elements.
-     * <p/>
      * For example:
      * <pre>assertThat("foo", is(oneOf("bar", "foo")))</pre>
      *  
@@ -131,7 +119,6 @@ public class IsIn<T> extends BaseMatcher<T> {
      *     the elements amongst which matching items will be found 
      * 
      */
-    @Factory
     public static <T> Matcher<T> oneOf(T... elements) {
         return in(elements);
     }

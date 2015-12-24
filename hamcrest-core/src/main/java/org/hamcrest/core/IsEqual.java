@@ -1,10 +1,7 @@
-/*  Copyright (c) 2000-2006 hamcrest.org
- */
 package org.hamcrest.core;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 import java.lang.reflect.Array;
@@ -79,7 +76,6 @@ public class IsEqual<T> extends BaseMatcher<T> {
      * it will match if both the operand and the examined object are arrays of the same length and
      * contain items that are equal to each other (according to the above rules) <b>in the same
      * indexes</b>.</p> 
-     * <p/>
      * For example:
      * <pre>
      * assertThat("foo", equalTo("foo"));
@@ -87,8 +83,15 @@ public class IsEqual<T> extends BaseMatcher<T> {
      * </pre>
      * 
      */
-    @Factory
     public static <T> Matcher<T> equalTo(T operand) {
         return new IsEqual<T>(operand);
+    }
+
+    /**
+     * Creates an {@link org.hamcrest.core.IsEqual} matcher that does not enforce the values being
+     * compared to be of the same static type.
+     */
+    public static Matcher<Object> equalToObject(Object operand) {
+        return new IsEqual<Object>(operand);
     }
 }

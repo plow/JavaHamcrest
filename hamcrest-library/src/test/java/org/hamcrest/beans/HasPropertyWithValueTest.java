@@ -1,15 +1,4 @@
-/*  Copyright (c) 2000-20010 hamcrest.org
- */
 package org.hamcrest.beans;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
-import static org.hamcrest.core.IsAnything.anything;
-import static org.hamcrest.core.IsEqual.equalTo;
-
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
-import java.beans.SimpleBeanInfo;
 
 import org.hamcrest.AbstractMatcherTest;
 import org.hamcrest.Description;
@@ -17,12 +6,22 @@ import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 import org.hamcrest.core.IsEqual;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.beans.SimpleBeanInfo;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import static org.hamcrest.core.IsAnything.anything;
+import static org.hamcrest.core.IsEqual.equalTo;
+
 /**
  * @author Iain McGinniss
  * @author Nat Pryce
  * @author Steve Freeman
  * @since 1.1.0
  */
+@SuppressWarnings("UnusedDeclaration")
 public class HasPropertyWithValueTest extends AbstractMatcherTest {
   private final BeanWithoutInfo shouldMatch = new BeanWithoutInfo("is expected");
   private final BeanWithoutInfo shouldNotMatch = new BeanWithoutInfo("not expected");
@@ -34,7 +33,7 @@ public class HasPropertyWithValueTest extends AbstractMatcherTest {
     return hasProperty("irrelevant", anything());
   }
 
-  public void testMatchesInfolessBeanWithMatchedNamedProperty() {
+  public void testMatchesBeanWithoutInfoWithMatchedNamedProperty() {
     assertMatches("with property", hasProperty("property", equalTo("is expected")), shouldMatch);
     assertMismatchDescription("property 'property' was \"not expected\"", 
                               hasProperty("property", equalTo("is expected")), shouldNotMatch);
@@ -46,7 +45,7 @@ public class HasPropertyWithValueTest extends AbstractMatcherTest {
         hasProperty("property", equalTo("without info")), beanWithInfo);
   }
 
-  public void testDoesNotMatchInfolessBeanWithoutMatchedNamedProperty() {
+  public void testDoesNotMatchBeanWithoutInfoOrMatchedNamedProperty() {
     assertMismatchDescription("No property \"nonExistentProperty\"", 
                               hasProperty("nonExistentProperty", anything()), shouldNotMatch);
    }
@@ -61,7 +60,7 @@ public class HasPropertyWithValueTest extends AbstractMatcherTest {
   }
 
   public void testMatchesPropertyAndValue() {
-    assertMatches("property with value", hasProperty( "property", anything()), beanWithInfo);
+    assertMatches("property with value", hasProperty("property", anything()), beanWithInfo);
   }
   
   public void testDoesNotWriteMismatchIfPropertyMatches() {
@@ -71,7 +70,14 @@ public class HasPropertyWithValueTest extends AbstractMatcherTest {
   }
 
   public void testDescribesMissingPropertyMismatch() {
-    assertMismatchDescription("No property \"honk\"", hasProperty( "honk", anything()), shouldNotMatch);
+    assertMismatchDescription("No property \"honk\"", hasProperty("honk", anything()), shouldNotMatch);
+  }
+
+  public void testExceptionsInBeanMethodsShouldBeReportedCorrectly() {
+    assertMismatchDescription(
+      "Calling 'public java.lang.String org.hamcrest.beans.HasPropertyWithValueTest$BeanWithBug.getBroken()': \"bean failed\"",
+      hasProperty("broken", anything()),
+      new BeanWithBug());
   }
 
   public void testCanAccessAnAnonymousInnerClass() {
@@ -133,8 +139,18 @@ public class HasPropertyWithValueTest extends AbstractMatcherTest {
             new PropertyDescriptor("property", BeanWithInfo.class, "property", null) 
           };
       } catch (IntrospectionException e) {
-        throw new RuntimeException("Introspection exception: " + e.getMessage());
+        throw new AssertionError("Introspection exception", e);
       }
     }
+  }
+
+  public static class BeanWithBug {
+    public String getBroken() {
+      throw new BeanFailed();
+    }
+  }
+
+  public static class BeanFailed extends RuntimeException {
+    public BeanFailed() { super("bean failed"); }
   }
 }

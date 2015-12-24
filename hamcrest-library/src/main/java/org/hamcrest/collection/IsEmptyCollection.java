@@ -1,7 +1,6 @@
 package org.hamcrest.collection;
 
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
@@ -30,12 +29,10 @@ public class IsEmptyCollection<E> extends TypeSafeMatcher<Collection<? extends E
     /**
      * Creates a matcher for {@link java.util.Collection}s matching examined collections whose <code>isEmpty</code>
      * method returns <code>true</code>.
-     * <p/>
      * For example:
      * <pre>assertThat(new ArrayList&lt;String&gt;(), is(empty()))</pre>
      * 
      */
-    @Factory
     public static <E> Matcher<Collection<? extends E>> empty() {
         return new IsEmptyCollection<E>();
     }
@@ -43,7 +40,6 @@ public class IsEmptyCollection<E> extends TypeSafeMatcher<Collection<? extends E
     /**
      * Creates a matcher for {@link java.util.Collection}s matching examined collections whose <code>isEmpty</code>
      * method returns <code>true</code>.
-     * <p/>
      * For example:
      * <pre>assertThat(new ArrayList&lt;String&gt;(), is(emptyCollectionOf(String.class)))</pre>
      * 
@@ -51,7 +47,6 @@ public class IsEmptyCollection<E> extends TypeSafeMatcher<Collection<? extends E
      *     the type of the collection's content
      */
     @SuppressWarnings({"unchecked", "UnusedParameters"})
-    @Factory
     public static <E> Matcher<Collection<E>> emptyCollectionOf(Class<E> unusedToForceReturnType) {
       return (Matcher)empty();
     }

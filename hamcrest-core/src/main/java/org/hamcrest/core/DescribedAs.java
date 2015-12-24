@@ -1,10 +1,7 @@
-/*  Copyright (c) 2000-2006 hamcrest.org
- */
 package org.hamcrest.core;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 import java.util.regex.Pattern;
@@ -56,7 +53,6 @@ public class DescribedAs<T> extends BaseMatcher<T> {
     /**
      * Wraps an existing matcher, overriding its description with that specified.  All other functions are
      * delegated to the decorated matcher, including its mismatch description.
-     * <p/>
      * For example:
      * <pre>describedAs("a big decimal equal to %0", equalTo(myBigDecimal), myBigDecimal.toPlainString())</pre> 
      * 
@@ -67,7 +63,6 @@ public class DescribedAs<T> extends BaseMatcher<T> {
      * @param values
      *     optional values to insert into the tokenised description
      */
-    @Factory
     public static <T> Matcher<T> describedAs(String description, Matcher<T> matcher, Object... values) {
         return new DescribedAs<T>(description, matcher, values);
     }

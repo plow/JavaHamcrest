@@ -1,16 +1,11 @@
-/*  Copyright (c) 2000-2006 hamcrest.org
- */
 package org.hamcrest.core;
-
-import static org.hamcrest.AbstractMatcherTest.assertDescription;
-import static org.hamcrest.AbstractMatcherTest.assertDoesNotMatch;
-import static org.hamcrest.AbstractMatcherTest.assertMatches;
-import static org.hamcrest.AbstractMatcherTest.assertNullSafe;
-import static org.hamcrest.AbstractMatcherTest.assertUnknownTypeSafe;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import org.hamcrest.Matcher;
 import org.junit.Test;
+
+import static org.hamcrest.AbstractMatcherTest.*;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsEqual.equalToObject;
 
 public final class IsEqualTest {
 
@@ -45,6 +40,7 @@ public final class IsEqualTest {
         assertDoesNotMatch(matcher, new String[] {"a", "b"});
     }
 
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     @Test public void
     honoursIsEqualImplementationEvenWithNullValues() {
         Object alwaysEqual = new Object() {
@@ -60,7 +56,8 @@ public final class IsEqualTest {
             }
         };
 
-        final Matcher<Object> matcher = equalTo(null);
+        Matcher<Object> matcher = equalTo(null);
+
         assertMatches(matcher, alwaysEqual);
         assertDoesNotMatch(matcher, neverEqual);
     }
@@ -108,6 +105,16 @@ public final class IsEqualTest {
         assertDoesNotMatch(matcher, i3);
         assertDoesNotMatch(matcher, i4);
         assertDoesNotMatch(matcher, null);
+    }
+
+    @Test public void
+    hasUntypedVariant() {
+        Object original = 10;
+
+        assertMatches(equalToObject(10), original);
+        assertDoesNotMatch(equalToObject(0), original);
+        assertDoesNotMatch(equalToObject("10"), original);
+        assertDoesNotMatch(equalToObject(10), "10");
     }
 
     @Test public void

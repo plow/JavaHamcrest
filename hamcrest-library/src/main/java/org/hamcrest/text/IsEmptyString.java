@@ -1,13 +1,12 @@
 
 package org.hamcrest.text;
 
-import static org.hamcrest.core.AnyOf.anyOf;
-import static org.hamcrest.core.IsNull.nullValue;
-
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+
+import static org.hamcrest.core.AnyOf.anyOf;
+import static org.hamcrest.core.IsNull.nullValue;
 
 /**
  * Matches empty Strings (and null).
@@ -31,26 +30,22 @@ public final class IsEmptyString extends TypeSafeMatcher<String> {
 
     /**
      * Creates a matcher of {@link String} that matches when the examined string has zero length.
-     * <p/>
      * For example:
      * <pre>assertThat("", isEmptyString())</pre>
      * 
      * @deprecated use is(emptyString()) instead
      */
     @Deprecated
-    @Factory
     public static Matcher<String> isEmptyString() {
         return emptyString();
     }
 
     /**
      * Creates a matcher of {@link String} that matches when the examined string has zero length.
-     * <p/>
      * For example:
      * <pre>assertThat("", is(emptyString()))</pre>
      * 
      */
-    @Factory
     public static Matcher<String> emptyString() {
         return INSTANCE;
     }
@@ -58,7 +53,6 @@ public final class IsEmptyString extends TypeSafeMatcher<String> {
     /**
      * Creates a matcher of {@link String} that matches when the examined string is <code>null</code>, or
      * has zero length.
-     * <p/>
      * For example:
      * <pre>assertThat(((String)null), isEmptyOrNullString())</pre>
      * 
@@ -66,7 +60,6 @@ public final class IsEmptyString extends TypeSafeMatcher<String> {
      * 
      */
     @Deprecated
-    @Factory
     public static Matcher<String> isEmptyOrNullString() {
         return emptyOrNullString();
     }
@@ -74,12 +67,10 @@ public final class IsEmptyString extends TypeSafeMatcher<String> {
     /**
      * Creates a matcher of {@link String} that matches when the examined string is <code>null</code>, or
      * has zero length.
-     * <p/>
      * For example:
      * <pre>assertThat(((String)null), is(emptyOrNullString()))</pre>
      * 
      */
-    @Factory
     public static Matcher<String> emptyOrNullString() {
         return NULL_OR_EMPTY_INSTANCE;
     }

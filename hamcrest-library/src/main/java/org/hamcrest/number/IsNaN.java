@@ -1,9 +1,6 @@
-/*  Copyright (c) 2000-2006 hamcrest.org
- */
 package org.hamcrest.number;
 
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
@@ -32,11 +29,9 @@ public final class IsNaN extends TypeSafeMatcher<Double> {
 
     /**
      * Creates a matcher of {@link Double}s that matches when an examined double is not a number.
-     * <p/>
      * For example:
      * <pre>assertThat(Double.NaN, is(notANumber()))</pre>
      */
-    @Factory
     public static Matcher<Double> notANumber() {
         return new IsNaN();
     }

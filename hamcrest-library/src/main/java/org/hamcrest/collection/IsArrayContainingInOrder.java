@@ -1,10 +1,9 @@
 package org.hamcrest.collection;
 
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsNull;
+import org.hamcrest.internal.NullSafety;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,14 +40,12 @@ public class IsArrayContainingInOrder<E> extends TypeSafeMatcher<E[]> {
      * Creates a matcher for arrays that matches when each item in the examined array is
      * logically equal to the corresponding item in the specified items.  For a positive match,
      * the examined array must be of the same length as the number of specified items.
-     * <p/>
      * For example:
      * <pre>assertThat(new String[]{"foo", "bar"}, contains("foo", "bar"))</pre>
      * 
      * @param items
      *     the items that must equal the items within an examined array
      */
-    @Factory
     public static <E> Matcher<E[]> arrayContaining(E... items) {
         List<Matcher<? super E>> matchers = new ArrayList<Matcher<? super E>>();
         for (E item : items) {
@@ -61,16 +58,17 @@ public class IsArrayContainingInOrder<E> extends TypeSafeMatcher<E[]> {
      * Creates a matcher for arrays that matches when each item in the examined array satisfies the
      * corresponding matcher in the specified matchers.  For a positive match, the examined array
      * must be of the same length as the number of specified matchers.
-     * <p/>
      * For example:
      * <pre>assertThat(new String[]{"foo", "bar"}, contains(equalTo("foo"), equalTo("bar")))</pre>
      * 
      * @param itemMatchers
      *     the matchers that must be satisfied by the items in the examined array
      */
-    @Factory
     public static <E> Matcher<E[]> arrayContaining(Matcher<? super E>... itemMatchers) {
-        final List<Matcher<? super E>> nullSafeWithExplicitTypeMatchers = nullSafe(itemMatchers);
+        //required for JDK 1.6
+        //noinspection RedundantTypeArguments
+        final List<Matcher<? super E>> nullSafeWithExplicitTypeMatchers = NullSafety.<E>nullSafe(itemMatchers);
+
         return arrayContaining(nullSafeWithExplicitTypeMatchers);
     }
 
@@ -78,24 +76,14 @@ public class IsArrayContainingInOrder<E> extends TypeSafeMatcher<E[]> {
      * Creates a matcher for arrays that matches when each item in the examined array satisfies the
      * corresponding matcher in the specified list of matchers.  For a positive match, the examined array
      * must be of the same length as the specified list of matchers.
-     * <p/>
      * For example:
      * <pre>assertThat(new String[]{"foo", "bar"}, contains(Arrays.asList(equalTo("foo"), equalTo("bar"))))</pre>
      * 
      * @param itemMatchers
      *     a list of matchers, each of which must be satisfied by the corresponding item in an examined array
      */
-    @Factory
     public static <E> Matcher<E[]> arrayContaining(List<Matcher<? super E>> itemMatchers) {
         return new IsArrayContainingInOrder<E>(itemMatchers);
     }
 
-    @SuppressWarnings("unchecked")
-    private static <E> List<Matcher<? super E>> nullSafe(Matcher<? super E>[] itemMatchers) {
-        final List<Matcher<? super E>> matchers = new ArrayList<Matcher<? super E>>(itemMatchers.length);
-        for (final Matcher<? super E> itemMatcher : itemMatchers) {
-            matchers.add((Matcher<? super E>) (itemMatcher == null ? IsNull.nullValue() : itemMatcher));
-        }
-        return matchers;
-    }
 }

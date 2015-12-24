@@ -1,11 +1,11 @@
 package org.hamcrest.collection;
 
-import org.hamcrest.Factory;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
-import org.hamcrest.core.IsEqual;
 
 import java.util.Collection;
+
+import static org.hamcrest.core.IsEqual.equalTo;
 
 /**
  * Matches if collection size satisfies a nested matcher.
@@ -23,14 +23,12 @@ public class IsCollectionWithSize<E> extends FeatureMatcher<Collection<? extends
     /**
      * Creates a matcher for {@link java.util.Collection}s that matches when the <code>size()</code> method returns
      * a value that satisfies the specified matcher.
-     * <p/>
      * For example:
      * <pre>assertThat(Arrays.asList("foo", "bar"), hasSize(equalTo(2)))</pre>
      * 
      * @param sizeMatcher
      *     a matcher for the size of an examined {@link java.util.Collection}
      */
-    @Factory
     public static <E> Matcher<Collection<? extends E>> hasSize(Matcher<? super Integer> sizeMatcher) {
         return new IsCollectionWithSize<E>(sizeMatcher);
     }
@@ -38,7 +36,6 @@ public class IsCollectionWithSize<E> extends FeatureMatcher<Collection<? extends
     /**
      * Creates a matcher for {@link java.util.Collection}s that matches when the <code>size()</code> method returns
      * a value equal to the specified <code>size</code>.
-     * <p/>
      * For example:
      * <pre>assertThat(Arrays.asList("foo", "bar"), hasSize(2))</pre>
      * 
@@ -46,9 +43,8 @@ public class IsCollectionWithSize<E> extends FeatureMatcher<Collection<? extends
      *     the expected size of an examined {@link java.util.Collection}
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-	@Factory
     public static <E> Matcher<Collection<? extends E>> hasSize(int size) {
-    	return (Matcher)IsCollectionWithSize.hasSize(IsEqual.<Integer>equalTo(size));
+    	return (Matcher)IsCollectionWithSize.hasSize(equalTo(size));
     }
 
 }

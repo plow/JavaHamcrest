@@ -1,7 +1,6 @@
 package org.hamcrest.collection;
 
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
@@ -26,19 +25,16 @@ public class IsEmptyIterable<E> extends TypeSafeMatcher<Iterable<? extends E>> {
 
     /**
      * Creates a matcher for {@link Iterable}s matching examined iterables that yield no items.
-     * <p/>
      * For example:
      * <pre>assertThat(new ArrayList&lt;String&gt;(), is(emptyIterable()))</pre>
      * 
      */
-    @Factory
     public static <E> Matcher<Iterable<? extends E>> emptyIterable() {
         return new IsEmptyIterable<E>();
     }
 
     /**
      * Creates a matcher for {@link Iterable}s matching examined iterables that yield no items.
-     * <p/>
      * For example:
      * <pre>assertThat(new ArrayList&lt;String&gt;(), is(emptyIterableOf(String.class)))</pre>
      * 
@@ -46,7 +42,6 @@ public class IsEmptyIterable<E> extends TypeSafeMatcher<Iterable<? extends E>> {
      *     the type of the iterable's content
      */
     @SuppressWarnings({"unchecked", "UnusedParameters"})
-    @Factory
     public static <E> Matcher<Iterable<E>> emptyIterableOf(Class<E> unusedToForceReturnType) {
       return (Matcher)emptyIterable();
     }

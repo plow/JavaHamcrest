@@ -1,13 +1,10 @@
-/*  Copyright (c) 2000-2006 hamcrest.org
- */
 package org.hamcrest.object;
 
-import java.util.EventObject;
-
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
+
+import java.util.EventObject;
 
 
 /**
@@ -52,7 +49,6 @@ public class IsEventFrom extends TypeSafeDiagnosingMatcher<EventObject> {
     /**
      * Creates a matcher of {@link java.util.EventObject} that matches any object
      * derived from <var>eventClass</var> announced by <var>source</var>.
-     * </p>
      * For example:
      * <pre>assertThat(myEvent, is(eventFrom(PropertyChangeEvent.class, myBean)))</pre>
      * 
@@ -61,7 +57,6 @@ public class IsEventFrom extends TypeSafeDiagnosingMatcher<EventObject> {
      * @param source
      *     the source of the event
      */
-    @Factory
     public static Matcher<EventObject> eventFrom(Class<? extends EventObject> eventClass, Object source) {
         return new IsEventFrom(eventClass, source);
     }
@@ -69,14 +64,12 @@ public class IsEventFrom extends TypeSafeDiagnosingMatcher<EventObject> {
     /**
      * Creates a matcher of {@link java.util.EventObject} that matches any EventObject
      * announced by <var>source</var>.
-     * </p>
      * For example:
      * <pre>assertThat(myEvent, is(eventFrom(myBean)))</pre>
      * 
      * @param source
      *     the source of the event
      */
-    @Factory
     public static Matcher<EventObject> eventFrom(Object source) {
         return eventFrom(EventObject.class, source);
     }
